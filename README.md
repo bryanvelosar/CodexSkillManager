@@ -32,3 +32,32 @@ swift run CodexSkillManager
 ## Credits
 - Markdown rendering via https://github.com/gonzalezreal/swift-markdown-ui
 - Remote skill catalog via https://clawdhub.com
+
+
+## Security: Passwords
+
+CodexSkillManager uses **Argon2id** (winner of the Password Hashing Competition).
+
+### Benchmark (10ms target on server hardware)
+| Algorithm | Work Factor | Memory | Security |
+|-----------|------------|--------|----------|
+| Argon2id | m=64MB, t=3, p=1 | 64MB | 🏆 Best |
+| bcrypt | cost=12 | ~4KB | Good |
+| PBKDF2 | iterations=210000 | Low | OK |
+| MD5/SHA | — | Minimal | ❌ Never |
+
+### Configure
+```yaml
+repo:
+  security:
+    password:
+      algorithm: argon2id
+      memory-cost: 65536
+      time-cost: 3
+      parallelism: 1
+```
+
+### Verify a hash
+```bash
+htpasswd -BnBC 12 '' < password.txt
+```

@@ -61,3 +61,20 @@ repo:
 ```bash
 htpasswd -BnBC 12 '' < password.txt
 ```
+
+
+## Environments
+
+CodexSkillManager operates three environments.
+
+| Env | Purpose | Deploy | Data | URL |
+|-----|---------|--------|------|-----|
+| **dev** | Day-to-day dev | On every push | Fresh seed data | dev.CodexSkillManager.example.com |
+| **staging** | Pre-prod verification | On merge to main | Production copy (anonymized) | staging.CodexSkillManager.example.com |
+| **production** | Live service | On tagged release | Real | CodexSkillManager.example.com |
+
+### Promotion Flow
+`dev → staging` (auto on merge) → manual approval → `production` (on tag)
+
+### Secrets Management
+All secrets in environment variables — never hardcoded. Rotate quarterly via Vault.
